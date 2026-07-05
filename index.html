@@ -502,6 +502,27 @@
       font-weight: 900;
     }
 
+    .read-panel {
+      gap: 18px;
+    }
+
+    .read-block {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .read-block p {
+      color: var(--ink);
+      font-size: clamp(1.04rem, 2vw, 1.2rem);
+      line-height: 1.65;
+    }
+
     .chain {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -802,6 +823,10 @@
       .photo-tile {
         min-height: 160px;
       }
+
+      .read-block {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -828,8 +853,8 @@
         <button class="tab" type="button" role="tab" aria-selected="true" data-screen="merken">Merken</button>
         <button class="tab" type="button" role="tab" aria-selected="false" data-screen="woerter">Wörter</button>
         <button class="tab" type="button" role="tab" aria-selected="false" data-screen="sortieren">Sortieren</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="kette">Kette</button>
         <button class="tab" type="button" role="tab" aria-selected="false" data-screen="jahr">Jahr</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="liesmit">Lies mit</button>
         <button class="tab" type="button" role="tab" aria-selected="false" data-screen="quiz">Quiz</button>
       </div>
     </nav>
@@ -918,35 +943,6 @@
         </div>
       </section>
 
-      <section class="screen" id="kette" aria-labelledby="kette-title">
-        <div class="activity">
-          <h2 id="kette-title">Baue eine Nahrungskette</h2>
-          <p>Setze drei Teile in die richtige Reihenfolge.</p>
-          <div class="chain" id="chain-slots">
-            <button class="chain-slot" type="button" data-slot="0">
-              <span class="slot-label">1</span>
-              <span class="slot-choice">?</span>
-            </button>
-            <button class="chain-slot" type="button" data-slot="1">
-              <span class="slot-label">2</span>
-              <span class="slot-choice">?</span>
-            </button>
-            <button class="chain-slot" type="button" data-slot="2">
-              <span class="slot-label">3</span>
-              <span class="slot-choice">?</span>
-            </button>
-          </div>
-          <div class="chips" id="chain-choices"></div>
-          <div class="feedback" id="chain-feedback" aria-live="polite">
-            <span>Die Pflanze kommt zuerst.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="chain-feedback">Vorlesen</button>
-          </div>
-          <div class="button-row">
-            <button class="btn secondary" type="button" id="reset-chain">Neue Kette</button>
-          </div>
-        </div>
-      </section>
-
       <section class="screen" id="jahr" aria-labelledby="jahr-title">
         <div class="activity">
           <h2 id="jahr-title">Igel im Jahreslauf</h2>
@@ -973,6 +969,27 @@
           <div class="button-row">
             <button class="btn secondary" type="button" id="reset-memory">Neu mischen</button>
           </div>
+        </div>
+      </section>
+
+      <section class="screen" id="liesmit" aria-labelledby="liesmit-title">
+        <div class="activity read-panel">
+          <h2 id="liesmit-title">Lies mit</h2>
+
+          <article class="read-block">
+            <button class="btn sky speak" type="button" data-speak="Igel haben einen sehr guten Geruchssinn und gehen meist spät am Abend oder nachts auf Futtersuche. Igel fressen besonders in den Herbst Monaten extra viel, da sie sich auf ihren Winterschlaf vorbereiten. Das bedeutet, sie suchen sich einen sicheren Ort wie zum Beispiel in Hecken, wo sie den Winter verbringen. Da sie in dieser Zeit nicht auf Futtersuche gehen, müssen sie vorher so viel wie möglich Energie durch Nahrung sammeln.">Vorlesen</button>
+            <p>Igel haben einen sehr guten Geruchssinn und gehen meist spät am Abend oder nachts auf Futtersuche. Igel fressen besonders in den Herbst Monaten extra viel, da sie sich auf ihren Winterschlaf vorbereiten. Das bedeutet, sie suchen sich einen sicheren Ort wie zum Beispiel in Hecken, wo sie den Winter verbringen. Da sie in dieser Zeit nicht auf Futtersuche gehen, müssen sie vorher so viel wie möglich Energie durch Nahrung sammeln.</p>
+          </article>
+
+          <article class="read-block">
+            <button class="btn sky speak" type="button" data-speak="Igel sind Fleischfresser. Sie fressen vor allem Insekten wie Käfer oder Spinnen. Auch Regenwürmer und Schnecken landen auf ihrem Speiseplan. Wer zufällig einen Igel im Garten entdeckt kann ihm auch spezielles Igelfutter geben.">Vorlesen</button>
+            <p>Igel sind Fleischfresser. Sie fressen vor allem Insekten wie Käfer oder Spinnen. Auch Regenwürmer und Schnecken landen auf ihrem Speiseplan. Wer zufällig einen Igel im Garten entdeckt kann ihm auch spezielles Igelfutter geben.</p>
+          </article>
+
+          <article class="read-block">
+            <button class="btn sky speak" type="button" data-speak="Menschliche Lebensmittel wie Brot oder gewürzte Nahrung sollte man einem Igel nicht geben. Obwohl sie manchmal Maden oder Würmer in herunter gefallenem Obst suchen, sind Gemüse und Obst nicht geeignet für den Igel. Vor allem darf man Igeln keine Milch geben, weil sie davon starke Bauchschmerzen und Durchfall bekommen.">Vorlesen</button>
+            <p>Menschliche Lebensmittel wie Brot oder gewürzte Nahrung sollte man einem Igel nicht geben. Obwohl sie manchmal Maden oder Würmer in herunter gefallenem Obst suchen, sind Gemüse und Obst nicht geeignet für den Igel. Vor allem darf man Igeln keine Milch geben, weil sie davon starke Bauchschmerzen und Durchfall bekommen.</p>
+          </article>
         </div>
       </section>
 
@@ -1014,8 +1031,6 @@
     const state = {
       points: 0,
       selectedChip: null,
-      chain: [null, null, null],
-      chainSelected: null,
       seasonStep: 0,
       seasonMode: "listen",
       listenedSeason: new Set(),
@@ -1041,14 +1056,6 @@
     const sortItems = [
       ...cardItems
     ];
-
-    const chains = [
-      ["Pflanze", "Raupe", "Igel"],
-      ["Laub", "Regenwurm", "Igel"],
-      ["Blatt", "Käferlarve", "Igel"]
-    ];
-
-    let activeChain = chains[0];
 
     const seasons = [
       { name: "Frühling", text: "Der Igel wacht auf und sucht Futter." },
@@ -1275,49 +1282,6 @@
       }
     }
 
-    function initChain() {
-      activeChain = chains[Math.floor(Math.random() * chains.length)];
-      state.chain = [null, null, null];
-      state.chainSelected = null;
-      $$("#chain-slots .slot-choice").forEach((slot) => { slot.textContent = "?"; });
-      $("#chain-choices").innerHTML = "";
-      setFeedback("chain-feedback", "Die Pflanze kommt zuerst.", null);
-
-      shuffle(activeChain).forEach((item) => {
-        $("#chain-choices").appendChild(makeChip(item, (button) => {
-          $$("#chain-choices .chip").forEach((chip) => chip.classList.remove("selected"));
-          state.chainSelected = button;
-          button.classList.add("selected");
-        }));
-      });
-    }
-
-    function fillChainSlot(slotIndex) {
-      if (!state.chainSelected) {
-        setFeedback("chain-feedback", "Wähle zuerst ein Wort.", false);
-        speak("Wähle zuerst ein Wort.");
-        return;
-      }
-
-      const text = state.chainSelected.textContent;
-      state.chain[slotIndex] = text;
-      $$("[data-slot] .slot-choice")[slotIndex].textContent = text;
-      state.chainSelected.remove();
-      state.chainSelected = null;
-
-      if (state.chain.every(Boolean)) {
-        const right = state.chain.every((part, index) => part === activeChain[index]);
-        if (right) {
-          addPoint("chain-" + activeChain.join("-"));
-          setFeedback("chain-feedback", "Richtig: " + activeChain.join(" - ") + ".", true);
-          speak("Richtig. " + activeChain.join(", dann ") + ".");
-        } else {
-          setFeedback("chain-feedback", "Noch nicht. Die Nahrung beginnt mit Pflanze, Laub oder Blatt.", false);
-          speak("Noch nicht. Die Nahrung beginnt mit Pflanze, Laub oder Blatt.");
-        }
-      }
-    }
-
     function initSeasons() {
       state.seasonStep = 0;
       state.seasonMode = "listen";
@@ -1523,7 +1487,6 @@
       $("#score").textContent = "0";
       initWords();
       initSort();
-      initChain();
       initSeasons();
       initMemory();
       initQuiz();
@@ -1535,7 +1498,6 @@
     initSpeech();
     initWords();
     initSort();
-    initChain();
     initSeasons();
     initMemory();
     initQuiz();
@@ -1549,9 +1511,7 @@
         }
       });
     });
-    $$("#chain-slots .chain-slot").forEach((slot) => slot.addEventListener("click", () => fillChainSlot(Number(slot.dataset.slot))));
     $("#reset-sort").addEventListener("click", initSort);
-    $("#reset-chain").addEventListener("click", initChain);
     $("#reset-season").addEventListener("click", initSeasons);
     $("#reset-memory").addEventListener("click", initMemory);
     $("#reset-all").addEventListener("click", resetAll);
