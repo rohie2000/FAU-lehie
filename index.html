@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Igel-Lernapp</title>
+  <title>Lernapps Grundschule</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Andika:wght@400;700&display=swap");
 
@@ -11,26 +11,17 @@
       color-scheme: light;
       --bg: #f4f1ea;
       --paper: #fffdfa;
-      --ink: #1e2930;
-      --muted: #57666f;
-      --leaf: #2f7d4f;
-      --leaf-dark: #20583a;
-      --berry: #b6425b;
-      --sky: #237c9a;
-      --sun: #d88a2d;
-      --soil: #594638;
+      --ink: #1f2b31;
+      --muted: #62717a;
       --line: #d9d1c4;
-      --right: #2e8b57;
-      --wrong: #bd3f45;
+      --leaf: #2f7d4f;
+      --soil: #594638;
+      --disabled: #d8dadd;
       --shadow: 0 18px 50px rgba(54, 42, 31, 0.12);
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -39,1482 +30,190 @@
       font-family: "Andika", Arial, Helvetica, sans-serif;
       color: var(--ink);
       background:
-        linear-gradient(180deg, rgba(255, 253, 250, 0.82), rgba(244, 241, 234, 0.94)),
-        url("assets/lebensraum.png") center / cover fixed;
+        linear-gradient(180deg, rgba(255, 253, 250, 0.92), rgba(244, 241, 234, 0.97)),
+        url("Igel/assets/lebensraum.png") center / cover fixed;
     }
 
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    .app {
+    .shell {
       min-height: 100vh;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
     }
 
-    header {
-      padding: 18px clamp(14px, 3vw, 32px) 10px;
+    header,
+    footer {
       background: rgba(255, 253, 250, 0.92);
-      border-bottom: 1px solid rgba(89, 70, 56, 0.18);
       backdrop-filter: blur(10px);
     }
 
-    .topbar {
-      width: min(1180px, 100%);
+    header {
+      border-bottom: 1px solid rgba(89, 70, 56, 0.16);
+      padding: clamp(20px, 5vw, 42px) clamp(16px, 4vw, 40px);
+    }
+
+    .header-inner,
+    main,
+    footer p {
+      width: min(1120px, 100%);
       margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand img {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 2px solid #fff;
-      box-shadow: 0 6px 16px rgba(33, 37, 41, 0.16);
-      flex: 0 0 auto;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.55rem, 4vw, 3rem);
-      line-height: 1.02;
+      font-size: clamp(2rem, 6vw, 3.7rem);
+      line-height: 1.05;
       letter-spacing: 0;
     }
 
     .subtitle {
-      margin: 5px 0 0;
+      margin: 8px 0 0;
       color: var(--muted);
-      font-size: clamp(0.95rem, 2vw, 1.08rem);
-      line-height: 1.35;
-    }
-
-    .score {
-      min-width: 142px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(54, 42, 31, 0.08);
-    }
-
-    .score strong {
-      display: block;
-      font-size: 1.8rem;
-      line-height: 1;
-      color: var(--leaf-dark);
-    }
-
-    .score span {
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 0.86rem;
-    }
-
-    nav {
-      padding: 10px clamp(14px, 3vw, 32px);
-      background: rgba(244, 241, 234, 0.92);
-      border-bottom: 1px solid rgba(89, 70, 56, 0.14);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 5;
-    }
-
-    .tabs {
-      width: min(1180px, 100%);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .tab {
-      min-height: 48px;
-      padding: 8px 10px;
-      border-radius: 8px;
-      background: #ffffff;
-      color: var(--soil);
-      border: 1px solid var(--line);
-      font-weight: 800;
-      box-shadow: 0 4px 12px rgba(54, 42, 31, 0.06);
-    }
-
-    .tab[aria-selected="true"] {
-      background: var(--leaf);
-      color: #fff;
-      border-color: var(--leaf);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.45;
     }
 
     main {
-      width: min(1180px, 100%);
-      margin: 0 auto;
-      padding: clamp(14px, 3vw, 32px);
+      padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 40px);
     }
 
-    .screen {
-      display: none;
-      animation: show 180ms ease-out;
-    }
-
-    .screen.active {
-      display: block;
-    }
-
-    @keyframes show {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero {
+    .app-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 18px;
       align-items: stretch;
-      margin-bottom: 18px;
     }
 
-    .hero-copy,
-    .activity,
-    .fact,
-    .feedback {
-      background: rgba(255, 253, 250, 0.96);
+    .tile {
+      min-height: 310px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      border-radius: 8px;
+      background: var(--paper);
       box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      padding: clamp(18px, 3vw, 30px);
-      display: grid;
-      align-content: center;
-      gap: 14px;
-    }
-
-    .hero-copy h2,
-    .activity h2 {
-      margin: 0;
-      font-size: clamp(1.55rem, 3vw, 2.3rem);
-      letter-spacing: 0;
-      line-height: 1.08;
-    }
-
-    .lead {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.24rem);
-      line-height: 1.5;
-      max-width: 62ch;
-    }
-
-    .hero-photo {
-      min-height: 330px;
-      border-radius: 8px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: var(--shadow);
-      background: #ddd;
+      display: grid;
+      grid-template-rows: 170px 1fr;
+      color: inherit;
+      text-decoration: none;
     }
 
-    .hero-photo img,
-    .photo-tile img {
+    .tile[href]:hover,
+    .tile[href]:focus-visible {
+      outline: 4px solid rgba(47, 125, 79, 0.24);
+      border-color: var(--leaf);
+      transform: translateY(-2px);
+    }
+
+    .tile-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      background: #e6e1d8;
     }
 
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .btn {
-      min-height: 44px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: var(--soil);
-      color: #fff;
-      font-weight: 800;
-      box-shadow: 0 8px 16px rgba(54, 42, 31, 0.14);
-    }
-
-    .btn.secondary {
-      background: #fff;
-      color: var(--soil);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-
-    .btn.sky {
-      background: var(--sky);
-    }
-
-    .btn.berry {
-      background: var(--berry);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .fact {
+    .tile-body {
       padding: 18px;
       display: grid;
-      gap: 12px;
       align-content: start;
+      gap: 8px;
     }
 
-    .fact h3,
-    .activity h3 {
+    .tile h2 {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: 1.55rem;
+      line-height: 1.12;
       letter-spacing: 0;
     }
 
-    .fact p,
-    .activity p {
+    .tile p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.48;
-      font-size: 1.04rem;
+      line-height: 1.45;
     }
 
-    .fact-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 8px;
-    }
-
-    .fact-list li {
-      padding: 9px 10px;
-      border-radius: 8px;
-      background: #f4f7ef;
-      border-left: 5px solid var(--leaf);
-      font-weight: 700;
-      line-height: 1.35;
-    }
-
-    .activity {
-      padding: clamp(16px, 2.6vw, 24px);
-      display: grid;
-      gap: 16px;
-    }
-
-    .photo-strip {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .photo-tile {
-      min-height: 180px;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: #fff;
-      position: relative;
-    }
-
-    .photo-tile span {
-      position: absolute;
-      left: 8px;
-      bottom: 8px;
-      max-width: calc(100% - 16px);
-      padding: 6px 8px;
-      border-radius: 8px;
-      background: rgba(255, 253, 250, 0.9);
-      color: var(--ink);
-      font-weight: 800;
-      line-height: 1.15;
-    }
-
-    .sort-board {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .dropzone {
-      min-height: 230px;
-      padding: 12px;
-      border: 2px dashed #b9ad9d;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.72);
-      display: grid;
-      align-content: start;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .dropzone h3 {
-      color: var(--soil);
-      position: relative;
-      z-index: 1;
-    }
-
-    .dropzone[data-kind="eat"] {
-      border-color: rgba(47, 125, 79, 0.55);
-    }
-
-    .dropzone[data-kind="avoid"] {
-      border-color: rgba(182, 66, 91, 0.55);
-    }
-
-    .dropzone::before {
-      position: absolute;
-      right: 14px;
-      top: 8px;
-      font-size: clamp(4.3rem, 11vw, 7.5rem);
-      line-height: 1;
-      font-weight: 900;
-      opacity: 0.13;
-      pointer-events: none;
-    }
-
-    .dropzone[data-kind="eat"]::before {
-      content: "\2713";
-      color: var(--right);
-    }
-
-    .dropzone[data-kind="avoid"]::before {
-      content: "\00d7";
-      color: var(--wrong);
-    }
-
-    .chips {
-      min-height: 72px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: flex-start;
-      position: relative;
-      z-index: 1;
-    }
-
-    .chip {
-      min-height: 46px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: #fff;
-      color: var(--ink);
-      border: 1px solid var(--line);
-      font-weight: 800;
-      box-shadow: 0 5px 14px rgba(54, 42, 31, 0.08);
-    }
-
-    .chip.selected {
-      outline: 4px solid rgba(35, 124, 154, 0.28);
-      border-color: var(--sky);
-    }
-
-    .chip.correct {
-      background: #e7f4ea;
-      border-color: var(--right);
-    }
-
-    .chip.wrong {
-      background: #fdebed;
-      border-color: var(--wrong);
-    }
-
-    .card-chip,
-    .word-card {
-      width: 132px;
-      min-height: 164px;
-      padding: 8px;
-      display: grid;
-      grid-template-rows: 96px auto;
-      gap: 8px;
-      align-items: stretch;
-      text-align: center;
-      line-height: 1.15;
-    }
-
-    .card-chip img,
-    .word-card img {
-      width: 100%;
-      height: 96px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: #f2eee7;
-    }
-
-    .card-chip span,
-    .word-card span {
-      display: grid;
-      place-items: center;
-      min-height: 42px;
-    }
-
-    .word-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-      gap: 12px;
-    }
-
-    .word-card {
-      width: 100%;
-      min-height: 190px;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 8px 20px rgba(54, 42, 31, 0.08);
-    }
-
-    .word-button {
-      min-height: 46px;
-      border-radius: 8px;
-      background: var(--sky);
-      color: #fff;
-      font-weight: 900;
-    }
-
-    .read-panel {
-      gap: 18px;
-    }
-
-    .read-block {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 14px;
-      align-items: start;
-      padding: 16px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: #fff;
-    }
-
-    .read-block p {
-      color: var(--ink);
-      font-size: clamp(1.04rem, 2vw, 1.2rem);
-      line-height: 1.65;
-    }
-
-    .chain {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      align-items: stretch;
-    }
-
-    .chain-slot {
-      min-height: 132px;
-      border-radius: 8px;
-      border: 2px solid var(--line);
-      background: rgba(255, 255, 255, 0.76);
-      padding: 12px;
-      display: grid;
-      gap: 8px;
-      align-content: center;
-      text-align: center;
-    }
-
-    .slot-label {
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 0.94rem;
-    }
-
-    .slot-choice {
-      min-height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px solid var(--line);
-      font-weight: 900;
-      font-size: 1.08rem;
-      line-height: 1.2;
-      padding: 8px;
-    }
-
-    .season-grid,
-    .quiz-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .season-card,
-    .quiz-card {
-      min-height: 150px;
-      padding: 14px;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 8px 20px rgba(54, 42, 31, 0.08);
-      display: grid;
-      align-content: start;
-      gap: 8px;
-      text-align: left;
-    }
-
-    .season-card strong,
-    .quiz-card strong {
-      font-size: 1.12rem;
-      line-height: 1.18;
-    }
-
-    .season-card.active {
-      outline: 4px solid rgba(216, 138, 45, 0.28);
-      border-color: var(--sun);
-    }
-
-    .season-card.done,
-    .quiz-card.done {
-      background: #eef8f1;
-      border-color: rgba(47, 125, 79, 0.5);
-    }
-
-    .season-card.mystery strong {
-      display: none;
-    }
-
-    .season-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .season-button {
-      min-height: 46px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: #fff;
-      border: 1px solid var(--line);
-      color: var(--soil);
-      font-weight: 900;
-      box-shadow: 0 5px 14px rgba(54, 42, 31, 0.08);
-    }
-
-    .season-button.selected {
-      background: var(--sun);
-      border-color: var(--sun);
-      color: #fff;
-    }
-
-    .season-label {
+    .status {
       display: inline-flex;
       width: fit-content;
-      padding: 6px 8px;
+      padding: 5px 8px;
       border-radius: 8px;
       background: #e7f4ea;
-      color: var(--leaf-dark);
-      font-weight: 900;
-    }
-
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .memory-card {
-      min-height: 112px;
-      border-radius: 8px;
-      background: var(--sky);
-      color: #fff;
-      font-weight: 900;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 10px;
-      line-height: 1.2;
-      box-shadow: 0 8px 18px rgba(35, 124, 154, 0.16);
-    }
-
-    .memory-card.open {
-      background: #fff;
-      color: var(--ink);
-      border-color: var(--line);
-    }
-
-    .memory-card.matched {
-      background: #e7f4ea;
-      color: var(--leaf-dark);
-      border-color: var(--right);
-    }
-
-    .feedback {
-      min-height: 58px;
-      padding: 13px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--soil);
-      font-weight: 800;
-      line-height: 1.35;
-    }
-
-    .feedback.good {
-      background: #edf8ef;
-      border-color: rgba(47, 125, 79, 0.35);
-    }
-
-    .feedback.bad {
-      background: #fff0f1;
-      border-color: rgba(189, 63, 69, 0.35);
-    }
-
-    .tiny {
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    .site-footer {
-      padding: 12px clamp(14px, 3vw, 32px) 18px;
-      background: rgba(255, 253, 250, 0.9);
-      border-top: 1px solid rgba(89, 70, 56, 0.16);
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.35;
-      text-align: center;
-      backdrop-filter: blur(10px);
-    }
-
-    .site-footer p {
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .footer-link {
-      min-height: 32px;
-      padding: 4px 8px;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.78rem;
+      color: #20583a;
+      font-size: 0.82rem;
       font-weight: 700;
-      text-decoration: underline;
-      text-underline-offset: 3px;
     }
 
-    .info-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 20;
+    .placeholder {
+      background: #f2f3f4;
+      color: #5f666b;
+      box-shadow: none;
+    }
+
+    .placeholder-visual {
       display: grid;
       place-items: center;
-      padding: 18px;
-      background: rgba(30, 41, 48, 0.42);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(180, 185, 190, 0.5)),
+        var(--disabled);
+      color: #747b80;
+      font-size: 3rem;
+      font-weight: 700;
     }
 
-    .info-card {
-      width: min(520px, 100%);
-      padding: 22px;
-      border-radius: 8px;
-      background: var(--paper);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 14px;
+    .placeholder .status {
+      background: #e3e5e7;
+      color: #626a70;
     }
 
-    .info-card h2 {
-      margin: 0;
-      font-size: 1.35rem;
-      line-height: 1.18;
-    }
-
-    .info-card p {
-      margin: 0;
+    footer {
+      border-top: 1px solid rgba(89, 70, 56, 0.16);
+      padding: 12px 16px 18px;
       color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.5;
+      font-size: 0.78rem;
+      line-height: 1.35;
+      text-align: center;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    @media (max-width: 880px) {
-      .topbar,
-      .hero,
-      .grid,
-      .sort-board {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar {
-        display: grid;
-      }
-
-      .score {
-        width: 100%;
-      }
-
-      .tabs {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .tab {
-        min-height: 44px;
-      }
-
-      .photo-strip,
-      .season-grid,
-      .quiz-grid,
-      .memory-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .chain {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 520px) {
-      header {
-        padding-top: 12px;
-      }
-
-      .brand img {
-        width: 54px;
-        height: 54px;
-      }
-
-      .tabs,
-      .photo-strip,
-      .season-grid,
-      .quiz-grid,
-      .memory-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-photo {
-        min-height: 240px;
-      }
-
-      .photo-tile {
-        min-height: 160px;
-      }
-
-      .read-block {
-        grid-template-columns: 1fr;
+    @media (max-width: 560px) {
+      .tile {
+        min-height: 280px;
+        grid-template-rows: 150px 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="shell">
     <header>
-      <div class="topbar">
-        <div class="brand">
-          <img src="assets/igel.png" alt="Ein Igel im Garten">
-          <div>
-            <h1>Igel: Was frisst er?</h1>
-            <p class="subtitle">Lernapp für HSU, Klasse 2</p>
-          </div>
-        </div>
-        <div class="score" aria-live="polite">
-          <strong id="score">0</strong>
-          <span>Punkte</span>
-        </div>
+      <div class="header-inner">
+        <h1>Lernapps Grundschule</h1>
+        <p class="subtitle">Wähle ein Thema aus.</p>
       </div>
     </header>
 
-    <nav aria-label="Bereiche">
-      <div class="tabs" role="tablist">
-        <button class="tab" type="button" role="tab" aria-selected="true" data-screen="merken">Merken</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="woerter">Wörter</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="sortieren">Sortieren</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="jahr">Jahr</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="liesmit">Lies mit</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-screen="quiz">Quiz</button>
-      </div>
-    </nav>
-
     <main>
-      <section class="screen active" id="merken" aria-labelledby="merken-title">
-        <div class="hero">
-          <div class="hero-copy">
-            <h2 id="merken-title">Der Igel sucht kleine Tiere</h2>
-            <p class="lead" id="hero-text">Der Igel ist meist in der Dämmerung und in der Nacht unterwegs. Mit seiner feinen Nase findet er Käfer, Würmer, Raupen und andere kleine Tiere.</p>
-            <div class="button-row">
-              <button class="btn sky speak" type="button" data-speak="Der Igel ist meist in der Dämmerung und in der Nacht unterwegs. Mit seiner feinen Nase findet er Käfer, Würmer, Raupen und andere kleine Tiere.">Vorlesen</button>
-              <button class="btn secondary" type="button" data-screen-jump="woerter">Wörter üben</button>
-            </div>
+      <div class="app-grid" aria-label="Lernapps">
+        <a class="tile" href="Igel/index.html">
+          <img class="tile-image" src="Igel/assets/igel.png" alt="Ein Igel im Laub">
+          <div class="tile-body">
+            <span class="status">Verfügbar</span>
+            <h2>Igel</h2>
+            <p>Nahrung, Lebensraum, Jahreslauf und Leseübungen rund um den Igel.</p>
           </div>
-          <div class="hero-photo">
-            <img src="assets/igel.png" alt="Fotorealistischer Igel im Laub">
+        </a>
+
+        <article class="tile placeholder" aria-label="Weitere Themen folgen">
+          <div class="placeholder-visual" aria-hidden="true">+</div>
+          <div class="tile-body">
+            <span class="status">Platzhalter</span>
+            <h2>Weitere Themen</h2>
+            <p>Hier können später Lernapps zu Wald, Hecke oder anderen HSU-Themen erscheinen.</p>
           </div>
-        </div>
-
-        <div class="grid">
-          <article class="fact">
-            <h3>Merktext 1: Futter</h3>
-            <p id="fact-food">Ein Igel frisst vor allem kleine Tiere. Dazu gehören Käfer, Larven, Raupen, Spinnen und Regenwürmer. Obst frisst er kaum. Wenn ein Igel am Apfel sitzt, sucht er dort oft kleine Tiere.</p>
-            <ul class="fact-list">
-              <li>Käfer und Larven sind gutes Igel-Futter.</li>
-              <li>Milch ist für Igel nicht gut.</li>
-              <li>Fallobst lockt kleine Tiere an.</li>
-            </ul>
-            <button class="btn speak" type="button" data-speak="Ein Igel frisst vor allem kleine Tiere. Dazu gehören Käfer, Larven, Raupen, Spinnen und Regenwürmer. Obst frisst er kaum. Wenn ein Igel am Apfel sitzt, sucht er dort oft kleine Tiere. Milch ist für Igel nicht gut.">Vorlesen</button>
-          </article>
-
-          <article class="fact">
-            <h3>Merktext 2: Lebensraum</h3>
-            <p id="fact-home">Der Igel findet Nahrung in Hecken, Laub, Wiesen und wilden Gartenecken. Dort leben viele kleine Tiere. Wer Laub und Hecken schützt, schützt auch den Igel.</p>
-            <ul class="fact-list">
-              <li>Laubhaufen bieten Verstecke.</li>
-              <li>Hecken sind gute Wege und Schutzorte.</li>
-              <li>Viele Insekten bedeuten mehr Nahrung.</li>
-            </ul>
-            <button class="btn speak" type="button" data-speak="Der Igel findet Nahrung in Hecken, Laub, Wiesen und wilden Gartenecken. Dort leben viele kleine Tiere. Wer Laub und Hecken schützt, schützt auch den Igel.">Vorlesen</button>
-          </article>
-        </div>
-
-        <div class="photo-strip" aria-label="Fotos zum Thema">
-          <div class="photo-tile"><img src="assets/nahrung.png" alt="Kleine Bodentiere"><span>Nahrungstiere</span></div>
-          <div class="photo-tile"><img src="assets/lebensraum.png" alt="Igelgerechter Garten"><span>Lebensraum</span></div>
-          <div class="photo-tile"><img src="assets/falsche-hilfe.png" alt="Milch und Apfel im Garten"><span>Nicht alles hilft</span></div>
-        </div>
-      </section>
-
-      <section class="screen" id="woerter" aria-labelledby="woerter-title">
-        <div class="activity">
-          <h2 id="woerter-title">Ganzwörter üben</h2>
-          <p>Tippe auf das Wort. Dann wird es vorgelesen.</p>
-          <div class="word-grid" id="word-grid"></div>
-          <div class="feedback" id="word-feedback" aria-live="polite">
-            <span>Wähle ein Wort.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="word-feedback">Vorlesen</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="sortieren" aria-labelledby="sortieren-title">
-        <div class="activity">
-          <h2 id="sortieren-title">Was passt zum Igel?</h2>
-          <p>Tippe zuerst auf eine Bildkarte. Tippe dann auf die passende Seite.</p>
-          <div class="chips" id="sort-chips"></div>
-          <div class="sort-board">
-            <div class="dropzone" role="button" tabindex="0" data-kind="eat">
-              <h3>Der Igel frisst das</h3>
-              <div class="chips" id="eat-zone"></div>
-            </div>
-            <div class="dropzone" role="button" tabindex="0" data-kind="avoid">
-              <h3>Das ist keine gute Nahrung</h3>
-              <div class="chips" id="avoid-zone"></div>
-            </div>
-          </div>
-          <div class="feedback" id="sort-feedback" aria-live="polite">
-            <span>Sortiere alle Wörter.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="sort-feedback">Vorlesen</button>
-          </div>
-          <div class="button-row">
-            <button class="btn secondary" type="button" id="reset-sort">Neu mischen</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="jahr" aria-labelledby="jahr-title">
-        <div class="activity">
-          <h2 id="jahr-title">Igel im Jahreslauf</h2>
-          <p>Tippe jede Karte an und höre genau zu. Danach ordnest du die Jahreszeiten zu.</p>
-          <div class="season-grid" id="season-grid"></div>
-          <div class="season-buttons hidden" id="season-buttons" aria-label="Jahreszeiten auswählen"></div>
-          <div class="feedback" id="season-feedback" aria-live="polite">
-            <span>Höre zuerst alle vier Karten an.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="season-feedback">Vorlesen</button>
-          </div>
-          <div class="button-row">
-            <button class="btn secondary" type="button" id="reset-season">Neu starten</button>
-          </div>
-        </div>
-
-        <div class="activity" style="margin-top:16px">
-          <h2>Versteck-Paare</h2>
-          <p>Finde zusammengehörende Paare.</p>
-          <div class="memory-grid" id="memory-grid"></div>
-          <div class="feedback" id="memory-feedback" aria-live="polite">
-            <span>Decke zwei Karten auf.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="memory-feedback">Vorlesen</button>
-          </div>
-          <div class="button-row">
-            <button class="btn secondary" type="button" id="reset-memory">Neu mischen</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="screen" id="liesmit" aria-labelledby="liesmit-title">
-        <div class="activity read-panel">
-          <h2 id="liesmit-title">Lies mit</h2>
-
-          <article class="read-block">
-            <button class="btn sky speak" type="button" data-speak="Igel haben einen sehr guten Geruchssinn und gehen meist spät am Abend oder nachts auf Futtersuche. Igel fressen besonders in den Herbst Monaten extra viel, da sie sich auf ihren Winterschlaf vorbereiten. Das bedeutet, sie suchen sich einen sicheren Ort wie zum Beispiel in Hecken, wo sie den Winter verbringen. Da sie in dieser Zeit nicht auf Futtersuche gehen, müssen sie vorher so viel wie möglich Energie durch Nahrung sammeln.">Vorlesen</button>
-            <p>Igel haben einen sehr guten Geruchssinn und gehen meist spät am Abend oder nachts auf Futtersuche. Igel fressen besonders in den Herbst Monaten extra viel, da sie sich auf ihren Winterschlaf vorbereiten. Das bedeutet, sie suchen sich einen sicheren Ort wie zum Beispiel in Hecken, wo sie den Winter verbringen. Da sie in dieser Zeit nicht auf Futtersuche gehen, müssen sie vorher so viel wie möglich Energie durch Nahrung sammeln.</p>
-          </article>
-
-          <article class="read-block">
-            <button class="btn sky speak" type="button" data-speak="Igel sind Fleischfresser. Sie fressen vor allem Insekten wie Käfer oder Spinnen. Auch Regenwürmer und Schnecken landen auf ihrem Speiseplan. Wer zufällig einen Igel im Garten entdeckt kann ihm auch spezielles Igelfutter geben.">Vorlesen</button>
-            <p>Igel sind Fleischfresser. Sie fressen vor allem Insekten wie Käfer oder Spinnen. Auch Regenwürmer und Schnecken landen auf ihrem Speiseplan. Wer zufällig einen Igel im Garten entdeckt kann ihm auch spezielles Igelfutter geben.</p>
-          </article>
-
-          <article class="read-block">
-            <button class="btn sky speak" type="button" data-speak="Menschliche Lebensmittel wie Brot oder gewürzte Nahrung sollte man einem Igel nicht geben. Obwohl sie manchmal Maden oder Würmer in herunter gefallenem Obst suchen, sind Gemüse und Obst nicht geeignet für den Igel. Vor allem darf man Igeln keine Milch geben, weil sie davon starke Bauchschmerzen und Durchfall bekommen.">Vorlesen</button>
-            <p>Menschliche Lebensmittel wie Brot oder gewürzte Nahrung sollte man einem Igel nicht geben. Obwohl sie manchmal Maden oder Würmer in herunter gefallenem Obst suchen, sind Gemüse und Obst nicht geeignet für den Igel. Vor allem darf man Igeln keine Milch geben, weil sie davon starke Bauchschmerzen und Durchfall bekommen.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="screen" id="quiz" aria-labelledby="quiz-title">
-        <div class="activity">
-          <h2 id="quiz-title">Igel-Blitzquiz</h2>
-          <p>Tippe auf die richtige Antwort.</p>
-          <div class="quiz-grid" id="quiz-grid"></div>
-          <div class="feedback" id="quiz-feedback" aria-live="polite">
-            <span>Wähle eine Frage.</span>
-            <button class="btn secondary speak-feedback" type="button" data-target="quiz-feedback">Vorlesen</button>
-          </div>
-          <div class="button-row">
-            <button class="btn berry" type="button" id="read-summary">Merksatz vorlesen</button>
-            <button class="btn secondary" type="button" id="reset-all">Alles zurücksetzen</button>
-          </div>
-        </div>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <button class="footer-link" type="button" id="open-info">Informationen zu dieser Lernapp</button>
-    </footer>
-
-    <div class="info-overlay hidden" id="info-overlay" role="dialog" aria-modal="true" aria-labelledby="info-title">
-      <div class="info-card">
-        <h2 id="info-title">Informationen zu dieser Lernapp</h2>
-        <p>Erstellt von Lena Hientz im Rahmen des Studiums Grundschule an der FAU mit Unterstützung von KI. Bilder sind KI generiert. Verwendete Schriftart Andika mit frei nutzbarer SIL Open Font License.</p>
-        <div class="button-row">
-          <button class="btn secondary" type="button" id="close-info">Schließen</button>
-        </div>
+        </article>
       </div>
-    </div>
+    </main>
+
+    <footer>
+      <p>Erstellt von Lena Hientz im Rahmen des Studiums Grundschule an der FAU mit Unterstützung von KI.</p>
+    </footer>
   </div>
-
-  <script>
-    const $ = (selector, root = document) => root.querySelector(selector);
-    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-    const state = {
-      points: 0,
-      selectedChip: null,
-      seasonStep: 0,
-      seasonMode: "listen",
-      listenedSeason: new Set(),
-      selectedSeasonName: null,
-      memoryOpen: [],
-      memoryLocked: false,
-      solved: new Set()
-    };
-
-    const cardItems = [
-      { text: "Käfer", kind: "eat", image: "assets/karte-kaefer.png", alt: "Käfer auf Erde" },
-      { text: "Regenwurm", kind: "eat", image: "assets/karte-regenwurm.png", alt: "Regenwurm auf Erde" },
-      { text: "Raupe", kind: "eat", image: "assets/karte-raupe.png", alt: "Raupe auf einem Blatt" },
-      { text: "Spinne", kind: "eat", image: "assets/karte-spinne.png", alt: "Spinne auf Laub" },
-      { text: "Larve", kind: "eat", image: "assets/karte-larve.png", alt: "Käferlarve auf Erde" },
-      { text: "Schnecke", kind: "eat", image: "assets/karte-schnecke.png", alt: "Schnecke auf Erde" },
-      { text: "Tausendfüßler", kind: "eat", image: "assets/karte-tausendfuessler.png", alt: "Tausendfüßler auf Laub und Erde" },
-      { text: "Vogelei", kind: "eat", image: "assets/karte-vogelei.png", alt: "Kleines Vogelei im Gras" },
-      { text: "Apfel", kind: "avoid", image: "assets/karte-apfel.png", alt: "Roter Apfel auf Erde" },
-      { text: "Milch", kind: "avoid", image: "assets/karte-milch.png", alt: "Schale mit Milch" }
-    ];
-
-    const sortItems = [
-      ...cardItems
-    ];
-
-    const seasons = [
-      { name: "Frühling", text: "Der Igel wacht auf und sucht Futter." },
-      { name: "Sommer", text: "Der Igel findet viele kleine Tiere." },
-      { name: "Herbst", text: "Der Igel frisst sich Winterspeck an." },
-      { name: "Winter", text: "Der Igel schläft geschützt im Nest." }
-    ];
-
-    const memoryPairs = [
-      ["Laubhaufen", "Versteck"],
-      ["Hecke", "Schutz"],
-      ["Käfer", "Nahrung"],
-      ["Milch", "nicht gut"]
-    ];
-
-    const quiz = [
-      {
-        q: "Wann ist der Igel oft unterwegs?",
-        answers: ["nachts", "mittags", "im Schwimmbad"],
-        right: "nachts",
-        why: "Richtig. Der Igel sucht oft in der Dämmerung und nachts Futter."
-      },
-      {
-        q: "Was frisst der Igel gern?",
-        answers: ["Käfer", "Milchreis", "Bonbons"],
-        right: "Käfer",
-        why: "Genau. Käfer und Larven gehören zu seiner Nahrung."
-      },
-      {
-        q: "Was hilft dem Igel im Garten?",
-        answers: ["Laubhaufen", "kurzer Rasen überall", "Milchschale"],
-        right: "Laubhaufen",
-        why: "Ja. Im Laub findet der Igel Schutz und kleine Tiere."
-      },
-      {
-        q: "Was sucht der Igel am Apfel?",
-        answers: ["kleine Tiere", "Apfelsaft", "Kerne zum Spielen"],
-        right: "kleine Tiere",
-        why: "Richtig. Am Fallobst leben oft kleine Tiere."
-      }
-    ];
-
-    function shuffle(items) {
-      return [...items].sort(() => Math.random() - 0.5);
-    }
-
-    function speak(text) {
-      if (!("speechSynthesis" in window)) {
-        setFeedback("quiz-feedback", "Dieser Browser kann gerade nicht vorlesen.", false);
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "de-DE";
-      utterance.rate = 0.9;
-      utterance.pitch = 1.04;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    function addPoint(key) {
-      if (state.solved.has(key)) return;
-      state.solved.add(key);
-      state.points += 1;
-      $("#score").textContent = state.points;
-    }
-
-    function setFeedback(id, text, good) {
-      const box = $("#" + id);
-      $("span", box).textContent = text;
-      box.classList.toggle("good", good === true);
-      box.classList.toggle("bad", good === false);
-    }
-
-    function initInfoCard() {
-      const overlay = $("#info-overlay");
-      const openButton = $("#open-info");
-      const closeButton = $("#close-info");
-
-      function openInfo() {
-        overlay.classList.remove("hidden");
-        closeButton.focus();
-      }
-
-      function closeInfo() {
-        overlay.classList.add("hidden");
-        openButton.focus();
-      }
-
-      openButton.addEventListener("click", openInfo);
-      closeButton.addEventListener("click", closeInfo);
-      overlay.addEventListener("click", (event) => {
-        if (event.target === overlay) closeInfo();
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !overlay.classList.contains("hidden")) closeInfo();
-      });
-    }
-
-    function makeChip(item, onClick) {
-      const button = document.createElement("button");
-      button.className = item.image ? "chip card-chip" : "chip";
-      button.type = "button";
-      if (item.image) {
-        const img = document.createElement("img");
-        img.src = item.image;
-        img.alt = item.alt || item.text;
-        const label = document.createElement("span");
-        label.textContent = item.text;
-        button.append(img, label);
-      } else {
-        button.textContent = item.text || item;
-      }
-      button.dataset.kind = item.kind || "";
-      button.dataset.word = item.text || item;
-      button.addEventListener("click", () => onClick(button, item));
-      return button;
-    }
-
-    function initTabs() {
-      $$(".tab").forEach((tab) => {
-        tab.addEventListener("click", () => showScreen(tab.dataset.screen));
-      });
-      $$("[data-screen-jump]").forEach((button) => {
-        button.addEventListener("click", () => showScreen(button.dataset.screenJump));
-      });
-    }
-
-    function showScreen(id) {
-      $$(".screen").forEach((screen) => screen.classList.toggle("active", screen.id === id));
-      $$(".tab").forEach((tab) => tab.setAttribute("aria-selected", String(tab.dataset.screen === id)));
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function initSpeech() {
-      $$(".speak").forEach((button) => {
-        button.addEventListener("click", () => speak(button.dataset.speak));
-      });
-
-      $$(".speak-feedback").forEach((button) => {
-        button.addEventListener("click", () => {
-          speak($("#" + button.dataset.target).innerText.replace("Vorlesen", "").trim());
-        });
-      });
-
-      $("#read-summary").addEventListener("click", () => {
-        speak("Der Igel frisst kleine Tiere. Er braucht Laub, Hecken und wilde Ecken. Milch ist für Igel nicht gut.");
-      });
-    }
-
-    function initWords() {
-      $("#word-grid").innerHTML = "";
-      setFeedback("word-feedback", "Wähle ein Wort.", null);
-
-      cardItems.forEach((item) => {
-        const card = document.createElement("article");
-        card.className = "word-card";
-
-        const img = document.createElement("img");
-        img.src = item.image;
-        img.alt = item.alt;
-
-        const button = document.createElement("button");
-        button.className = "word-button";
-        button.type = "button";
-        button.textContent = item.text;
-        button.addEventListener("click", () => {
-          addPoint("word-" + item.text);
-          setFeedback("word-feedback", item.text, true);
-          speak(item.text);
-        });
-
-        card.append(img, button);
-        $("#word-grid").appendChild(card);
-      });
-    }
-
-    function initSort() {
-      state.selectedChip = null;
-      $("#sort-chips").innerHTML = "";
-      $("#eat-zone").innerHTML = "";
-      $("#avoid-zone").innerHTML = "";
-      setFeedback("sort-feedback", "Sortiere alle Bildkarten.", null);
-
-      shuffle(sortItems).forEach((item) => {
-        $("#sort-chips").appendChild(makeChip(item, (button) => {
-          $$(".chip").forEach((chip) => chip.classList.remove("selected"));
-          state.selectedChip = button;
-          button.classList.add("selected");
-        }));
-      });
-    }
-
-    function handleDrop(kind) {
-      const chip = state.selectedChip;
-      if (!chip) {
-        setFeedback("sort-feedback", "Tippe zuerst auf ein Wort.", false);
-        speak("Tippe zuerst auf ein Wort.");
-        return;
-      }
-
-      const isRight = chip.dataset.kind === kind;
-      const word = chip.dataset.word || chip.textContent.trim();
-      chip.classList.remove("selected");
-      chip.classList.add(isRight ? "correct" : "wrong");
-
-      if (isRight) {
-        $("#" + (kind === "eat" ? "eat-zone" : "avoid-zone")).appendChild(chip);
-        chip.disabled = true;
-        state.selectedChip = null;
-        addPoint("sort-" + word);
-        setFeedback("sort-feedback", "Richtig: " + word + " passt hier.", true);
-        speak("Richtig. " + word + " passt hier.");
-      } else {
-        state.selectedChip = null;
-        setFeedback("sort-feedback", "Fast. " + word + " passt auf die andere Seite.", false);
-        speak("Fast. " + word + " passt auf die andere Seite.");
-        setTimeout(() => chip.classList.remove("wrong"), 700);
-      }
-
-      if ($("#sort-chips").children.length === 0) {
-        setFeedback("sort-feedback", "Alles sortiert. Der Igel braucht kleine Tiere, aber keine Milch.", true);
-        speak("Alles sortiert. Der Igel braucht kleine Tiere, aber keine Milch.");
-      }
-    }
-
-    function initSeasons() {
-      state.seasonStep = 0;
-      state.seasonMode = "listen";
-      state.listenedSeason = new Set();
-      state.selectedSeasonName = null;
-      $("#season-grid").innerHTML = "";
-      $("#season-buttons").innerHTML = "";
-      $("#season-buttons").classList.add("hidden");
-      setFeedback("season-feedback", "Höre zuerst alle vier Karten an.", null);
-
-      shuffle(seasons).forEach((season) => {
-        const card = document.createElement("button");
-        card.className = "season-card";
-        card.type = "button";
-        card.dataset.season = season.name;
-        card.innerHTML = `<strong>${season.name}</strong><span>${season.text}</span>`;
-        card.addEventListener("click", () => {
-          if (state.seasonMode === "listen") {
-            state.listenedSeason.add(season.name);
-            card.classList.add("active");
-            speak(season.name + ": " + season.text);
-            const left = seasons.length - state.listenedSeason.size;
-            const message = left > 0 ? "Gut. Höre noch " + left + " Karte an." : "Jetzt ordnest du die Jahreszeiten zu.";
-            setFeedback("season-feedback", message, true);
-            if (left === 0) {
-              window.setTimeout(startSeasonMatch, 700);
-            }
-            return;
-          }
-
-          matchSeasonCard(card, season);
-        });
-        $("#season-grid").appendChild(card);
-      });
-    }
-
-    function startSeasonMatch() {
-      state.seasonMode = "match";
-      state.selectedSeasonName = null;
-      setFeedback("season-feedback", "Wähle eine Jahreszeit. Tippe dann auf den passenden Merksatz.", null);
-
-      $$("#season-grid .season-card").forEach((card) => {
-        card.classList.remove("active");
-        card.classList.add("mystery");
-      });
-
-      $("#season-buttons").classList.remove("hidden");
-      $("#season-buttons").innerHTML = "";
-      shuffle(seasons).forEach((season) => {
-        const button = document.createElement("button");
-        button.className = "season-button";
-        button.type = "button";
-        button.textContent = season.name;
-        button.dataset.season = season.name;
-        button.addEventListener("click", () => {
-          state.selectedSeasonName = season.name;
-          $$(".season-button").forEach((item) => item.classList.remove("selected"));
-          button.classList.add("selected");
-          setFeedback("season-feedback", season.name + " ist ausgewählt.", true);
-          speak(season.name);
-        });
-        $("#season-buttons").appendChild(button);
-      });
-    }
-
-    function matchSeasonCard(card, season) {
-      if (card.classList.contains("done")) {
-        speak(season.name + ": " + season.text);
-        return;
-      }
-
-      if (!state.selectedSeasonName) {
-        setFeedback("season-feedback", "Wähle zuerst eine Jahreszeit.", false);
-        speak("Wähle zuerst eine Jahreszeit.");
-        return;
-      }
-
-      if (state.selectedSeasonName === season.name) {
-        card.classList.remove("mystery");
-        card.classList.add("done");
-        card.disabled = true;
-        const label = document.createElement("span");
-        label.className = "season-label";
-        label.textContent = season.name;
-        card.prepend(label);
-        addPoint("season-match-" + season.name);
-
-        const selectedButton = $(`.season-button[data-season="${season.name}"]`);
-        if (selectedButton) selectedButton.disabled = true;
-        $$(".season-button").forEach((item) => item.classList.remove("selected"));
-        state.selectedSeasonName = null;
-
-        const done = $$("#season-grid .season-card.done").length;
-        const message = done === seasons.length ? "Alle Jahreszeiten passen." : "Richtig. Suche die nächste Jahreszeit.";
-        setFeedback("season-feedback", message, true);
-        speak(message);
-      } else {
-        setFeedback("season-feedback", "Das passt noch nicht. Höre den Merksatz noch einmal.", false);
-        speak("Das passt noch nicht. " + season.text);
-      }
-    }
-
-    function initMemory() {
-      state.memoryOpen = [];
-      state.memoryLocked = false;
-      $("#memory-grid").innerHTML = "";
-      setFeedback("memory-feedback", "Decke zwei Karten auf.", null);
-
-      const cards = shuffle(memoryPairs.flatMap((pair, index) => pair.map((text) => ({ text, pair: index }))));
-      cards.forEach((item) => {
-        const card = document.createElement("button");
-        card.className = "memory-card";
-        card.type = "button";
-        card.textContent = "?";
-        card.dataset.text = item.text;
-        card.dataset.pair = item.pair;
-        card.addEventListener("click", () => openMemory(card));
-        $("#memory-grid").appendChild(card);
-      });
-    }
-
-    function openMemory(card) {
-      if (state.memoryLocked || card.classList.contains("open") || card.classList.contains("matched")) return;
-
-      card.classList.add("open");
-      card.textContent = card.dataset.text;
-      state.memoryOpen.push(card);
-
-      if (state.memoryOpen.length === 2) {
-        const [first, second] = state.memoryOpen;
-        if (first.dataset.pair === second.dataset.pair) {
-          first.classList.add("matched");
-          second.classList.add("matched");
-          addPoint("memory-" + first.dataset.pair);
-          setFeedback("memory-feedback", first.dataset.text + " und " + second.dataset.text + " passen zusammen.", true);
-          speak("Das passt zusammen.");
-          state.memoryOpen = [];
-        } else {
-          state.memoryLocked = true;
-          setFeedback("memory-feedback", "Dieses Paar passt noch nicht.", false);
-          setTimeout(() => {
-            first.classList.remove("open");
-            second.classList.remove("open");
-            first.textContent = "?";
-            second.textContent = "?";
-            state.memoryOpen = [];
-            state.memoryLocked = false;
-          }, 900);
-        }
-      }
-    }
-
-    function initQuiz() {
-      $("#quiz-grid").innerHTML = "";
-      setFeedback("quiz-feedback", "Wähle eine Frage.", null);
-
-      quiz.forEach((item, index) => {
-        const card = document.createElement("article");
-        card.className = "quiz-card";
-        card.tabIndex = 0;
-        card.setAttribute("aria-label", "Frage vorlesen: " + item.q);
-        card.addEventListener("click", (event) => {
-          if (event.target.closest("button")) return;
-          speak(item.q + " " + item.answers.join(". "));
-        });
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            speak(item.q + " " + item.answers.join(". "));
-          }
-        });
-        const title = document.createElement("strong");
-        title.textContent = item.q;
-        card.appendChild(title);
-
-        shuffle(item.answers).forEach((answer) => {
-          const button = document.createElement("button");
-          button.className = "chip";
-          button.type = "button";
-          button.textContent = answer;
-          button.addEventListener("click", (event) => {
-            event.stopPropagation();
-            if (answer === item.right) {
-              card.classList.add("done");
-              addPoint("quiz-" + index);
-              setFeedback("quiz-feedback", item.why, true);
-              speak(item.why);
-            } else {
-              setFeedback("quiz-feedback", "Nicht ganz. Probiere eine andere Antwort.", false);
-              speak("Nicht ganz. Probiere eine andere Antwort.");
-            }
-          });
-          card.appendChild(button);
-        });
-
-        $("#quiz-grid").appendChild(card);
-      });
-    }
-
-    function resetAll() {
-      state.points = 0;
-      state.solved.clear();
-      $("#score").textContent = "0";
-      initWords();
-      initSort();
-      initSeasons();
-      initMemory();
-      initQuiz();
-      speak("Alles ist zurückgesetzt.");
-    }
-
-    initTabs();
-    initInfoCard();
-    initSpeech();
-    initWords();
-    initSort();
-    initSeasons();
-    initMemory();
-    initQuiz();
-
-    $$(".dropzone").forEach((zone) => {
-      zone.addEventListener("click", () => handleDrop(zone.dataset.kind));
-      zone.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          handleDrop(zone.dataset.kind);
-        }
-      });
-    });
-    $("#reset-sort").addEventListener("click", initSort);
-    $("#reset-season").addEventListener("click", initSeasons);
-    $("#reset-memory").addEventListener("click", initMemory);
-    $("#reset-all").addEventListener("click", resetAll);
-  </script>
 </body>
 </html>
